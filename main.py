@@ -66,6 +66,12 @@ if __name__=="__main__":
     url = "https://www.teamspeak.com/versions/server.json"
 
     req = requests.get(url)
+    from datetime import datetime
+    last_modified = req.headers.get('Last-Modified')
+    if last_modified:
+        timestamp = datetime.strptime(last_modified, '%a, %d %b %Y %H:%M:%S GMT')
+    else:
+        timestamp = datetime.now()
     data = req.json()
 
     platforms = list(data.keys())
