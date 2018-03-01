@@ -38,11 +38,21 @@ if __name__=="__main__":
 
     import argparse
     parser = argparse.ArgumentParser()
+    parser.add_argument('storedir', nargs=1, help='storage directory')
+
+    parser.add_argument('-v', '--verbose', action='count', default=0,
+                        help='show more verbose output')
+
     args = parser.parse_args()
+    storedir = args.storedir[0]
+    if not storedir.endswith("/"):
+        storedir = storedir + "/"
 
     url = "https://www.teamspeak.com/versions/server.json"
 
     req = requests.get(url)
+    if args.verbose:
+        print("[INFO] got headers: {}".format(req.headers))
     from datetime import datetime
     last_modified = req.headers.get('Last-Modified')
     if last_modified:
@@ -82,6 +92,9 @@ if __name__=="__main__":
                 unique_id=guid
             )
 
+            if args.verbose:
+              print("[INFO] FEED: {}".format(FEED))
+              print("[INFO] ITEM: {}".format(FEED_ITEM))
             import feedgenerator
             atomfeed = feedgenerator.Atom1Feed(**FEED)
             rssfeed  = feedgenerator.Rss201rev2Feed(**FEED)
@@ -89,9 +102,9 @@ if __name__=="__main__":
             atomfeed.add_item(**FEED_ITEM)
             rssfeed.add_item(**FEED_ITEM)
 
-            with open('{}_{}-atom.xml'.format(platform, arch), 'w') as f:
+            with open('{}{}_{}-atom.xml'.format(storedir, platform, arch), 'w') as f:
                 result = atomfeed.writeString('utf-8')
                 f.write(result)
-            with open('{}_{}-rss.xml'.format(platform, arch), 'w') as f:
+            with open('{}{}_{}-rss.xml'.format(storedir, platform, arch), 'w') as f:
                 result = rssfeed.writeString('utf-8')
                 f.write(result)
