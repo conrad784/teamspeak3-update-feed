@@ -25,33 +25,9 @@ BUGS
     
 AUTHOR
         Conrad Sachweh, conrad@csachweh.de
-        {version}
 """
 
-version="$Id$"
 #--------- Classes, Functions, etc ---------------------------------------------
-class Example(object):
-    """This shows how the docu should be included in a class...
-    """
-    x=0
-
-def examplefunc():
-    """This shows how the docu should be included in a function...
-    """
-    pass
-#-------------------------------------------------------------------------------
-import argparse
-class MyHelpFormatter(argparse.RawTextHelpFormatter):
-    # It is necessary to use the new string formatting syntax, otherwise
-    # the %(prog) expansion in the parent function is not going to work
-    def _format_text(self, text):
-        if '{version}' in text:
-            text = text.format(version=version)
-        return super(MyHelpFormatter, self)._format_text(text)
-
-def ManOptionParser():
-    return argparse.ArgumentParser(description=__doc__, 
-                                       formatter_class=MyHelpFormatter)
 
 #-------------------------------------------------------------------------------
 #    Main 
@@ -60,7 +36,8 @@ if __name__=="__main__":
     import sys
     import json, requests
 
-    parser = ManOptionParser()
+    import argparse
+    parser = argparse.ArgumentParser()
     args = parser.parse_args()
 
     url = "https://www.teamspeak.com/versions/server.json"
