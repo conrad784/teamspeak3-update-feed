@@ -75,7 +75,7 @@ if __name__=="__main__":
             FEED = dict(
                 title='Teamspeak3 Server Update Feed',
                 subtitle="Teamspeak3 Server for {}-{}".format(platform, arch),
-                link='http://www.csachweh.de/ts3/{}-feed.atom'.format(platform),
+                link='http://www.csachweh.de/ts3/',
                 description="""This feed shows always the latest version of the Teamspeak3 Server for {}'.format(platform))
                 """,
                 author_name='Conrad Sachweh',
