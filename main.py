@@ -76,8 +76,7 @@ if __name__=="__main__":
                 title='Teamspeak3 Server Update Feed',
                 subtitle="Teamspeak3 Server for {}-{}".format(platform, arch),
                 link='http://www.csachweh.de/ts3/',
-                description="""This feed shows always the latest version of the Teamspeak3 Server for {}'.format(platform))
-                """,
+                description='This feed shows always the latest version of the Teamspeak3 Server for {}'.format(platform),
                 author_name='Conrad Sachweh',
                 author_email='spam@spamthis.space',
                 feed_url='http://www.csachweh.de/ts3',
