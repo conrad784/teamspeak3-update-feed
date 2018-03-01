@@ -80,30 +80,41 @@ if __name__=="__main__":
         arches = list(data[platform].keys())
         for arch in arches:
             info = data[platform][arch]
-            from feedgen.feed import FeedGenerator
-            fg = FeedGenerator()
-            fg.id('http://www.csachweh.de/ts3')
-            fg.title('Teamspeak3 Server Update Feed')
-            fg.author( {'name':'Conrad Sachweh','email':'spam@spamthis.space'} )
-            fg.link( href='http://www.csachweh.de/ts3', rel='alternate' )
-            fg.logo('https://upload.wikimedia.org/wikipedia/de/thumb/c/c7/Teamspeak-Logo.svg/200px-Teamspeak-Logo.svg.png')
-            fg.subtitle("Teamspeak3 Server for {}".format(platform))
-            fg.link( href='http://www.csachweh.de/ts3/{}-feed.atom'.format(platform), rel='self' )
-            fg.language('en')
-            fg.description('This feed shows always the latest version of the Teamspeak3 Server for {}'.format(platform))
-
             version = info["version"]
             downloadlink = info["mirrors"]["4Netplayers.de"]
             checksum = info["checksum"]
             guid = checksum
-    
-            fe = fg.add_entry()
-            fe.id(guid)
-            fe.title('Version {} is available!'.format(version))
-            fe.link(href="https://forum.teamspeak.com/forums/91-Latest-News")
-            fe.content("Version {} was released, get more information at <a href=\"https://forum.teamspeak.com/forums/91-Latest-News\">the forums</a>.<br>Download here: <a href=\"{}\">{}</a><br>SHA256: {}".format(version, downloadlink, downloadlink, checksum))
-        
-            atomfeed = fg.atom_str(pretty=True) # Get the ATOM feed as string
-            rssfeed  = fg.rss_str(pretty=True) # Get the RSS feed as string
-            fg.atom_file('{}_{}-atom.xml'.format(platform, arch)) # Write the ATOM feed to a file
-            fg.rss_file('{}_{}-rss.xml'.format(platform, arch)) # Write the RSS feed to a file
+
+            FEED = dict(
+                title='Teamspeak3 Server Update Feed',
+                subtitle="Teamspeak3 Server for {}-{}".format(platform, arch),
+                link='http://www.csachweh.de/ts3/{}-feed.atom'.format(platform),
+                description="""This feed shows always the latest version of the Teamspeak3 Server for {}'.format(platform))
+                """,
+                author_name='Conrad Sachweh',
+                author_email='spam@spamthis.space',
+                feed_url='http://www.csachweh.de/ts3',
+                language='en',
+            )
+
+            FEED_ITEM = dict(
+                title='Version {} is available!'.format(version),
+                link='https://forum.teamspeak.com/forums/91-Latest-News',
+                description="Version {} was released, get more information at <a href=\"https://forum.teamspeak.com/forums/91-Latest-News\">the forums</a>.<br>Download here: <a href=\"{}\">{}</a><br>SHA256: {}".format(version, downloadlink, downloadlink, checksum),
+                pubdate=timestamp,
+                unique_id=guid
+            )
+
+            import feedgenerator
+            atomfeed = feedgenerator.Atom1Feed(**FEED)
+            rssfeed  = feedgenerator.Rss201rev2Feed(**FEED)
+
+            atomfeed.add_item(**FEED_ITEM)
+            rssfeed.add_item(**FEED_ITEM)
+
+            with open('{}_{}-atom.xml'.format(platform, arch), 'w') as f:
+                result = atomfeed.writeString('utf-8')
+                f.write(result)
+            with open('{}_{}-rss.xml'.format(platform, arch), 'w') as f:
+                result = rssfeed.writeString('utf-8')
+                f.write(result)
