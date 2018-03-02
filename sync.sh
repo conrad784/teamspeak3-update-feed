@@ -1,2 +1,2 @@
 #!/bin/bash
-scp *.xml index.html gyges:/var/www/html/csachweh/ts3
+scp *.xml index.html medusa:/var/www/html/csachweh/ts3
