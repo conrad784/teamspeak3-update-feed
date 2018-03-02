@@ -87,7 +87,7 @@ if __name__=="__main__":
                 title='Version {} is available!'.format(version),
                 link='https://forum.teamspeak.com/forums/91-Latest-News',
                 description='Version {} was released'.format(version),
-                content='Version {} was released, get more information at <a href=\"https://forum.teamspeak.com/forums/91-Latest-News\">the forums</a>.<br>Download here: <a href=\"{}\">{}</a><br>SHA256: {}'.format(version, downloadlink, downloadlink, checksum),
+                content="""Version {} was released, get more information at <a href=\"https://forum.teamspeak.com/forums/91-Latest-News\">the forums</a>.<br>Download here: <a href=\"{}\">{}</a><br>SHA256: {}""".format(version, downloadlink, downloadlink, checksum),
                 pubdate=timestamp,
                 unique_id=guid
             )
