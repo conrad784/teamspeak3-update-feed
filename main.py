@@ -102,9 +102,7 @@ if __name__=="__main__":
             atomfeed.add_item(**FEED_ITEM)
             rssfeed.add_item(**FEED_ITEM)
 
-            with open('{}{}_{}-atom.xml'.format(storedir, platform, arch), 'w') as f:
-                result = atomfeed.writeString('utf-8')
-                f.write(result)
-            with open('{}{}_{}-rss.xml'.format(storedir, platform, arch), 'w') as f:
-                result = rssfeed.writeString('utf-8')
-                f.write(result)
+            with open('{}{}_{}.atom'.format(storedir, platform, arch), 'w') as f:
+                result = atomfeed.write(f, 'utf-8')
+            with open('{}{}_{}.rss'.format(storedir, platform, arch), 'w') as f:
+                result = rssfeed.write(f, 'utf-8')
