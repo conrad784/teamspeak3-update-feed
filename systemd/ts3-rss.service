@@ -1,0 +1,12 @@
+[Unit]
+Description=create ts3 update feed
+After=network-online.target
+
+[Service]
+User=workhorse
+Group=nogroup
+Type=oneshot
+ExecStart=/home/workhorse/ts3-rss/main.py /var/www/html/csachweh/ts3/
+
+[Install]
+WantedBy=multi-user.target

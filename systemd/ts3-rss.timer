@@ -1,0 +1,10 @@
+[Unit]
+Description=update ts3-rss
+
+[Timer]
+OnBootSec=30min
+OnUnitActiveSec=1h
+Unit=ts3-rss.service
+
+[Install]
+WantedBy=timers.target
