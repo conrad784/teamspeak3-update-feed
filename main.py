@@ -3,7 +3,7 @@
 # (C) 2018 Conrad Sachweh
 
 """NAME
-        %(prog)s - <description>
+        %(prog)s - create Teamspeak3 Update RSS Feed
     
 SYNOPSIS
         %(prog)s [--help]
