@@ -68,7 +68,10 @@ if __name__=="__main__":
         for arch in arches:
             info = data[platform][arch]
             version = info["version"]
-            downloadlink = info["mirrors"]["4Netplayers.de"]
+            try:
+                downloadlink = info["mirrors"]["teamspeak.com"]
+            except KeyError:
+                downloadlink = "None"
             checksum = info["checksum"]
             guid = checksum
 
