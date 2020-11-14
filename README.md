@@ -15,10 +15,14 @@ How-to host urself
 
 1. Install Python3
 
-1. Install dependencies `requests json feedgenerator`
+1. Install dependencies `requests feedgenerator`
 
 1. Change author of feed in 'main.py'
 
 1. Install the systemd files in your system and change them according to your setup.
 
 
+Dockerize
+---
+$ docker build --rm -t my-python-app .
+$ docker run -it --rm -v "$PWD/output":/output --name my-running-app my-python-app

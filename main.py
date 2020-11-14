@@ -78,17 +78,17 @@ if __name__=="__main__":
             FEED = dict(
                 title='Teamspeak3 Server Update Feed',
                 subtitle="Teamspeak3 Server for {}-{}".format(platform, arch),
-                link='http://www.csachweh.de/ts3',
+                link='https://projects.csachweh.de/ts3',
                 description='This feed shows always the latest version of the Teamspeak3 Server for {}'.format(platform),
                 author_name='Conrad Sachweh',
                 author_email='spam@spamthis.space',
-                feed_url='http://www.csachweh.de/ts3',
+                feed_url='https://projects.csachweh.de/ts3',
                 language='en',
             )
 
             FEED_ITEM = dict(
                 title='Version {} is available!'.format(version),
-                link='https://forum.teamspeak.com/forums/91-Latest-News',
+                link='https://community.teamspeak.com/c/announcements/7',
                 description='Version {} was released'.format(version),
                 content="""Version {} was released, get more information at <a href=\"https://forum.teamspeak.com/forums/91-Latest-News\">the forums</a>.<br>Download here: <a href=\"{}\">{}</a><br>SHA256: {}""".format(version, downloadlink, downloadlink, checksum),
                 pubdate=timestamp,
@@ -109,3 +109,30 @@ if __name__=="__main__":
                 result = atomfeed.write(f, 'utf-8')
             with open('{}{}_{}.rss'.format(storedir, platform, arch), 'w') as f:
                 result = rssfeed.write(f, 'utf-8')
+
+    with open('{}/index.html'.format(storedir), 'w') as f:
+        f.write("""
+<html>
+<head><title>Index of available feeds</title></head>
+<body bgcolor="white">
+  <h1>Index of available feeds</h1><hr><pre>
+    <a href="freebsd_x86_64.atom">freebsd_x86_64.atom</a>
+    <a href="freebsd_x86_64.rss">freebsd_x86_64.rss</a>
+    <a href="freebsd_x86.atom">freebsd_x86.atom</a>
+    <a href="freebsd_x86.rss">freebsd_x86.rss</a>
+
+    <a href="linux_x86_64.atom">linux_x86_64.atom</a>
+    <a href="linux_x86_64.rss">linux_x86_64.rss</a>
+    <a href="linux_x86.atom">linux_x86.atom</a>
+    <a href="linux_x86.rss">linux_x86.rss</a>
+
+    <a href="macos_x86_64.atom">macos_x86_64.atom</a>
+    <a href="macos_x86_64.rss">macos_x86_64.rss</a>
+
+    <a href="windows_x86_64.atom">windows_x86_64.atom</a>
+    <a href="windows_x86_64.rss">windows_x86_64.rss</a>
+    <a href="windows_x86.atom">windows_x86.atom</a>
+    <a href="windows_x86.rss">windows_x86.rss</a>
+  </pre><hr></body>
+</html>
+""")
